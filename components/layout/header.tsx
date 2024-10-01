@@ -9,6 +9,7 @@ export default function Header() {
       <nav className="flex items-center justify-between px-4 py-2 md:justify-end">
         <div className={cn('block lg:!hidden')}>
           <MobileSidebar />
+          
         </div>
         <div className="flex items-center gap-2">
           <UserNav />
