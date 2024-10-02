@@ -49,7 +49,7 @@ export default function UserAuthForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-2"
+          className="w-full space-y-1"
         >
           <FormField
             control={form.control}
@@ -85,19 +85,19 @@ export default function UserAuthForm() {
           />
 
 
-          <div className='flex gap-2 justify-between pt-4 pb-4'>
+          <div className='flex gap-2 justify-between pt-2 pb-2'>
             <div>
               <input type='checkbox' />
               <label> Remember Me</label>
             </div>
-            <div className=" underline-offset-4">
+            <div className=" underline-offset-4 cursor-pointer text-[15px]">
               Forgot Password
             </div>{' '}
           </div>
           <Button className="w-full bg-primary text-white" type='submit' >
             Sign In
           </Button>
-          <p className='text-center text-black py-2'>Don't have an account? <span className='text-blue-900 font-semibold'>Sign Up</span></p>
+          <p className='text-center text-black py-2'>Don't have an account? <span className='text-blue-900 font-semibold cursor-pointer'>Sign Up</span></p>
         </form>
       </Form>
       <div className="relative">

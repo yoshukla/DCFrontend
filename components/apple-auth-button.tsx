@@ -13,14 +13,14 @@ export default function AppleSignInButton() {
 
   return (
     <Button
-      className="border rounded-full px-4 py-4 h-auto"
+      className="border rounded-full p-3 h-auto"
       variant="link"
       type="button"
       onClick={() =>
         signIn('apple', { callbackUrl: callbackUrl ?? '/dashboard' })
       }
     > 
-    <Image  alt='Apple SignIn' src={AppleSignInBtn} width={25} height={25}/>
+    <Image  alt='Apple SignIn' src={AppleSignInBtn} width={23} height={23}/>
     </Button>
   );
 }
