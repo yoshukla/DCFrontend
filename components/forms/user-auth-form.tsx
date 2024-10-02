@@ -14,9 +14,10 @@ import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import GithubSignInButton from '../google-auth-button';
+import * as z from 'zod'; 
 import { Link } from 'lucide-react';
+import GoogleSignInButton from '../google-auth-button copy';
+import AppleSignInButton from '../apple-auth-button';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Enter a valid email address' })
@@ -56,11 +57,11 @@ export default function UserAuthForm() {
             render={({ field }) => (
               <>
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Doctor ML Id</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="Enter your email..."
+                      placeholder="Doctor ML Id"
                       disabled={loading}
                       {...field}
                     />
@@ -84,45 +85,35 @@ export default function UserAuthForm() {
           />
 
 
-          <div className='flex gap-2 justify-between'>
-
+          <div className='flex gap-2 justify-between pt-4 pb-4'>
             <div>
               <input type='checkbox' />
               <label> Remember Me</label>
             </div>
-
-            <div className="underline underline-offset-4">
+            <div className=" underline-offset-4">
               Forgot Password
             </div>{' '}
           </div>
           <Button className="w-full bg-primary text-white" type='submit' >
-            Login
+            Sign In
           </Button>
-
+          <p className='text-center text-black py-2'>Don't have an account? <span className='text-blue-900 font-semibold'>Sign Up</span></p>
         </form>
       </Form>
-
-      <div className='flex gap-2 mt-2'>
-        <Button className="ml-auto w-1/2 bg-primary text-white" >
-          Apple
-        </Button>
-
-        <Button className="ml-auto w-1/2 bg-primary text-white">
-          Gmail
-        </Button>
-      </div>
-
-      {/* <div className="relative">
+      <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
+        <div className="relative flex justify-center text-base">
           <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
+            Or sign in with
           </span>
         </div>
-      </div> */}
-      {/* <GithubSignInButton /> */}
+      </div>
+      <div className='flex justify-center align-middle gap-4'>
+       <AppleSignInButton/> 
+       <GoogleSignInButton/>
+      </div> 
     </>
   );
 }
