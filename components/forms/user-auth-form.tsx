@@ -97,7 +97,7 @@ export default function UserAuthForm() {
           <Button className="w-full bg-primary text-white" type='submit' >
             Sign In
           </Button>
-          <p className='text-center text-black py-2'>Don't have an account? <span className='text-blue-900 font-semibold cursor-pointer'>Sign Up</span></p>
+          <p className='text-center text-black py-2'>Don&apos;t have an account? <span className='text-blue-900 font-semibold cursor-pointer'>Sign Up</span></p>
         </form>
       </Form>
       <div className="relative">
