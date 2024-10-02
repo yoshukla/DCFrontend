@@ -26,8 +26,8 @@ export default function AuthenticationPage() {
         <div className="relative z-20 my-auto">
           <blockquote className="space-y-2">
             <p className="sm:text-[40px] text-[22px] sm:py-0 py-4 text-left  font-extrabold">
-              Welcome to <br></br>
-              MediLog Doctor's Portal
+              Welcome to <br />
+              MediLog Doctor&apos;s Portal
             </p> 
           </blockquote>
         </div>
