@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import GithubSignInButton from '../google-auth-button';
+import { Link } from 'lucide-react';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Enter a valid email address' })
@@ -53,35 +54,63 @@ export default function UserAuthForm() {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Enter your email..."
-                    disabled={loading}
-                    {...field}
-                  />
-                </FormControl>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Password"
-                    disabled={loading}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+              <>
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Enter your email..."
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </>
             )}
           />
 
-          <Button disabled={loading} className="ml-auto w-full" type="submit">
-            Continue With Email
-          </Button>
+
+          <div className='flex gap-2 justify-between'>
+
+             <div>
+            <input type='checkbox' />
+            <label> Remember Me</label> 
+            </div>
+
+             <div className="underline underline-offset-4">
+             Forgot Password
+            </div>{' '} 
+          </div>
+
+
         </form>
       </Form>
-      <div className="relative">
+
+      <div className='flex gap-2'>
+        <Button className="ml-auto w-1/2 bg-primary text-white" >
+          Apple
+        </Button>
+
+        <Button className="ml-auto w-1/2 bg-primary text-white">
+          Gmail
+        </Button>
+      </div>
+
+      {/* <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -90,8 +119,8 @@ export default function UserAuthForm() {
             Or continue with
           </span>
         </div>
-      </div>
-      <GithubSignInButton />
+      </div> */}
+      {/* <GithubSignInButton /> */}
     </>
   );
 }
