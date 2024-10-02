@@ -86,21 +86,23 @@ export default function UserAuthForm() {
 
           <div className='flex gap-2 justify-between'>
 
-             <div>
-            <input type='checkbox' />
-            <label> Remember Me</label> 
+            <div>
+              <input type='checkbox' />
+              <label> Remember Me</label>
             </div>
 
-             <div className="underline underline-offset-4">
-             Forgot Password
-            </div>{' '} 
+            <div className="underline underline-offset-4">
+              Forgot Password
+            </div>{' '}
           </div>
-
+          <Button className="w-full bg-primary text-white" type='submit' >
+            Login
+          </Button>
 
         </form>
       </Form>
 
-      <div className='flex gap-2'>
+      <div className='flex gap-2 mt-2'>
         <Button className="ml-auto w-1/2 bg-primary text-white" >
           Apple
         </Button>
