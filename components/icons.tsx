@@ -28,7 +28,9 @@ import {
   User,
   User2Icon,
   UserX2Icon,
-  X
+  X,
+  Airplay,
+  Bell
   
 
 } from 'lucide-react';
@@ -62,6 +64,8 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  System:Airplay,
+  Notification:Bell,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

@@ -88,9 +88,9 @@ export default function UserAuthForm() {
           <div className='flex gap-2 justify-between pt-2 pb-2'>
             <div>
               <input type='checkbox' />
-              <label> Remember Me</label>
+              <label> Remember me</label>
             </div>
-            <div className=" underline-offset-4 cursor-pointer text-[15px]">
+            <div className="underline-offset-4 text-sm">
               Forgot Password
             </div>{' '}
           </div>

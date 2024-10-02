@@ -112,39 +112,33 @@ export type Employee = {
 
 export const navItems: NavItem[] = [
   {
-    title: 'Dashboard',
+    title: 'Doctor Dashboard',
     href: '/dashboard',
-    icon: 'dashboard',
+    icon: 'System',
     label: 'Dashboard'
   },
   {
-    title: 'User',
+    title: 'Consultation',
     href: '/dashboard/user',
     icon: 'user',
     label: 'user'
   },
   {
-    title: 'Employee',
+    title: 'List of Patients',
     href: '/dashboard/employee',
-    icon: 'employee',
+    icon: 'page',
     label: 'employee'
   },
   {
-    title: 'Profile',
+    title: 'Paymnet Receipts',
     href: '/dashboard/profile',
-    icon: 'profile',
+    icon: 'billing',
     label: 'profile'
   },
   {
-    title: 'Kanban',
+    title: 'Request to admin',
     href: '/dashboard/kanban',
     icon: 'kanban',
     label: 'kanban'
-  },
-  {
-    title: 'Login',
-    href: '/',
-    icon: 'login',
-    label: 'login'
-  }
+  } 
 ];
