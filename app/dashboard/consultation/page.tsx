@@ -5,14 +5,14 @@ import { users } from '@/constants/data';
 
 const breadcrumbItems = [
   { title: 'Dashboard', link: '/dashboard' },
-  { title: 'User', link: '/dashboard/user' }
+  { title: 'Consultation', link: '/dashboard/consultation' }
 ];
 export default function page() {
   return (
     <PageContainer>
       <div className="space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
-        <UserClient data={users} />
+        {/* <UserClient data={users} /> */}
       </div>
     </PageContainer>
   );

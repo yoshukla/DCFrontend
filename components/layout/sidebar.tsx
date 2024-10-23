@@ -24,17 +24,17 @@ export default function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        `relative  hidden h-screen flex-none border-r bg-card transition-[width] duration-500 md:block`,
+        `relative  hidden h-screen flex-none border-r bg-white transition-[width] duration-500 md:block`,
         !isMinimized ? 'w-72' : 'w-[72px]',
         className
       )}
     >
-      <div className="hidden p-5 pt-10 lg:block">
+      <div className="hidden m-auto p-5 pt-10 lg:block">
         <Link
           href={'https://github.com/Kiranism/next-shadcn-dashboard-starter'}
           target="_blank"
         >
-          <Image src={logo} alt="logo" />
+          {/* <Image src={logo} alt="logo" /> */}
         </Link>
       </div>
       <ChevronLeft

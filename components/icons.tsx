@@ -35,6 +35,9 @@ import {
 
 } from 'lucide-react';
 
+import ConsultationIcon from '../public/images/sidebar/consultation.svg'
+
+
  export type Icon = LucideIcon; 
 
 export const Icons = {

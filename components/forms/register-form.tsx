@@ -26,10 +26,10 @@ import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
+import plusIcon from '../../public/images/plusIcon.svg'
 import * as z from 'zod';
-import { Link } from 'lucide-react';
-import GoogleSignInButton from '../google-auth-button copy';
-import AppleSignInButton from '../apple-auth-button';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const formSchema = z.object({
     email: z.string().email({ message: 'Enter a valid email address' })
@@ -68,17 +68,14 @@ export default function RegisterForm() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="w-full space-y-1" >
-
-
+                    className="w-full">
                     <FormField
                         control={form.control}
                         name="email"
                         render={({ field }) => (
                             <>
-                                <FormItem>
-                                    {/* <FormLabel>Images</FormLabel> */}
-                                    <FormControl>
+                                {/* <FormItem>
+                                     <FormControl>
                                         <FileUpload
                                             onChange={field.onChange}
                                             value={""}
@@ -86,33 +83,61 @@ export default function RegisterForm() {
                                         />
                                     </FormControl>
                                     <FormMessage />
-                                </FormItem>
+                                </FormItem> */}
 
+                                <div className='sm:flex gap-4'>
+                                    <FormItem>
+                                        <FormLabel>Full Name</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                placeholder="Name"
+                                                disabled={loading}
 
-                                <FormItem>
-                                    <FormLabel>Full Name</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="text"
-                                            placeholder="Name"
-                                            disabled={loading}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
 
-                                        />
-                                    </FormControl>
-                                </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Date of Birth</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="date"
+                                                placeholder="Name"
+                                                disabled={loading}
 
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="mail"
-                                            placeholder="Email"
-                                            disabled={loading}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
 
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
+                                </div>
+                                <div className='sm:flex gap-4'>
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="mail"
+                                                placeholder="Email"
+                                                disabled={loading}
+
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+
+                                    <FormItem>
+                                        <FormLabel>License Registration ID</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                placeholder="License Registration ID"
+                                                disabled={loading}
+
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                </div>
 
                                 <div className='sm:flex gap-4'>
                                     <FormItem>
@@ -236,6 +261,99 @@ export default function RegisterForm() {
 
                                 </div>
 
+                                <div className='border rounded-md p-3 mt-3'>
+                                    <FormItem>
+                                        <FormLabel>Qualifications</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                placeholder="Enter Qualification"
+                                                disabled={loading}
+
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+
+                                    <div className='sm:flex gap-4'>
+
+                                        <div className='sm:w-1/2'>
+                                            <FormItem>
+                                                <FormLabel>Medical College Name</FormLabel>
+                                                <Select
+                                                    disabled={loading}
+                                                    onValueChange={field.onChange}
+                                                    value={field.value}
+                                                    defaultValue={field.value}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue
+                                                                defaultValue={field.value}
+                                                                placeholder="Select"
+                                                            />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        <SelectItem value='Select'>
+                                                            Select
+                                                        </SelectItem>
+
+                                                        <SelectItem value='AIIMS'>
+                                                            AIIMS
+                                                        </SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        </div>
+
+                                        <div className='sm:w-1/2'>
+                                            <FormItem>
+                                                <FormLabel>Course Year</FormLabel>
+                                                <Select
+                                                    disabled={loading}
+                                                    onValueChange={field.onChange}
+                                                    value={field.value}
+                                                    defaultValue={field.value}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue
+                                                                defaultValue={field.value}
+                                                                placeholder="Select"
+                                                            />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        <SelectItem value='Select'>
+                                                            Select
+                                                        </SelectItem>
+
+                                                        <SelectItem value='2024'>
+                                                            2024
+                                                        </SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div className='text-primary font-semibold cursor-pointer my-2 flex gap-1 justify-end'>
+                                    Add
+                                    <Image src={plusIcon} alt='plusIcon' width={15} height={15} />
+                                </div>
+
+                                <div className='text-sm font-medium'>
+                                <input type='checkbox' />
+                                <label>  By signing up you agree to our 
+                                 <span className='text-[#db710e] underline cursor-pointer'>Terms & Conditions</span> and  
+                                 <span className='text-[#db710e] underline cursor-pointer'>Privacy Policy </span>
+                                 </label> 
+                                </div>
                             </>
                         )}
                     />

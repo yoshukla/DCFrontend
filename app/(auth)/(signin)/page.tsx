@@ -20,15 +20,16 @@ export default function AuthenticationPage() {
     lg:max-w-none lg:grid-cols-2 lg:px-0">
 
       <div className="relative sm:h-full flex-col bg-muted p-10 text-primary lg:flex dark:border-r"
-        style={{ backgroundImage: `url(${formBg.src || formBg})`, backgroundSize: 'cover' }}
-      >
+        style={{ backgroundImage: `url('images/formBg.svg')`,backgroundSize:'contain',backgroundPosition:'center',backgroundRepeat:'no-repeat' }} 
+        >
         <div className="absolute inset-0 bg-[#EFF6FF]" />
         <div className="relative z-20 flex items-center text-lg font-medium">
           {/* <Image src={logo} alt='logo' width={80} height={80} /> */}
           <p>niha</p>
         </div>
 
-        <div className="relative z-20 my-auto">
+        <div className="relative z-20 my-auto" 
+        >
           <blockquote className="space-y-2">
             <p className="sm:text-[40px] text-[22px] sm:py-0 py-4 text-left  font-extrabold">
               Welcome to <br />
