@@ -25,7 +25,12 @@ const formSchema = z.object({
 
 type UserFormValue = z.infer<typeof formSchema>;
 
-export default function LoginForm({ onForgotPassword,onRegister }) {
+interface LoginFormProps {
+    onForgotPassword: () => void; 
+    onRegister: () => void;   
+  }
+
+  export default function LoginForm({ onForgotPassword, onRegister }: LoginFormProps) {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl');
     const [loading, setLoading] = useState(false);
@@ -43,6 +48,8 @@ export default function LoginForm({ onForgotPassword,onRegister }) {
             callbackUrl: callbackUrl ?? '/dashboard'
         });
     };
+
+    
 
     return (
 
