@@ -24,8 +24,8 @@ export default function AuthenticationPage() {
         >
         <div className="absolute inset-0 bg-[#EFF6FF]" />
         <div className="relative z-20 flex items-center text-lg font-medium">
-          {/* <Image src={logo} alt='logo' width={80} height={80} /> */}
-          <p>niha</p>
+          <Image src={logo} alt='logo' width={80} height={80} />
+          {/* <p>niha</p> */}
         </div>
 
         <div className="relative z-20 my-auto" 

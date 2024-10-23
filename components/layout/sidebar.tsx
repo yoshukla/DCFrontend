@@ -34,7 +34,7 @@ export default function Sidebar({ className }: SidebarProps) {
           href={'https://github.com/Kiranism/next-shadcn-dashboard-starter'}
           target="_blank"
         >
-          {/* <Image src={logo} alt="logo" /> */}
+          <Image src={logo} alt="logo" />
         </Link>
       </div>
       <ChevronLeft
