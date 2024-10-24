@@ -6,18 +6,24 @@ import { UserClient } from '@/components/tables/user-tables/client';
 import { users } from '@/constants/data';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
-import Heading from '@/components/Heading/page-heading';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
+import Heading from '@/components/Heading/page-heading'; 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; 
+import { useForm, FormProvider, useFormContext, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod'; 
+ 
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input'; 
+import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation'; 
+import * as z from 'zod';
+import Required from '@/components/forms/required';
 import {
   Card,
   CardContent,
@@ -31,13 +37,29 @@ const breadcrumbItems = [
   { title: 'Consultation', link: '/dashboard/consultation' }
 ];
 
-export default function Page() { 
+const schema = z.object({
+  doctorMLId: z.string().nonempty({ message: "Doctor ML Id is required" })
+  // Add any other fields and validations as necessary
+});
+  
+export default function page() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
 
+  const methods = useForm({
+    resolver: zodResolver(schema) // Include your resolver if you're using Zod
+  });
+
+  const onSubmit = async (data: any) => {
+    console.log('Submitted Data:', data);
+    // Add your submit logic here
+  };
+ 
   const onClose = () => {
     setIsOpen(false)
-  }; 
+  };
+
+ 
 
   return (
     <>
@@ -312,50 +334,42 @@ export default function Page() {
       </PageContainer>
 
       <Modal
-        title="Consultation"
-        description=""
-        isOpen={isOpen}
-        onClose={onClose}>
-        <hr></hr>
-        {/* 
-        <form
-          className="w-full space-y-1"
-        >
+      title="Consultation"
+      description=""
+      isOpen={isOpen}
+      onClose={onClose}>
+      <hr />
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           <FormField
-            name=""
+            name="doctorMLId"
             render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormLabel>Doctor ML Id</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Doctor ML Id"
-                      disabled={loading}
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-
-              </>
+              <FormItem>
+                <FormLabel>Doctor ML Id</FormLabel>
+                <FormControl>
+                  <Controller
+                    name="doctorMLId" // Ensure this matches the schema
+                    control={methods.control}
+                    render={({ field }) => (
+                      <Input
+                        type="text"
+                        placeholder="Doctor ML Id"
+                        disabled={false} // Set loading condition if necessary
+                        {...field} // Spread field props here
+                      />
+                    )}
+                  />
+                </FormControl>
+                {/* <FormMessage>{methods.formState.errors.doctorMLId?.message}</FormMessage> */}
+              </FormItem>
             )}
           />
-
-
-
-
-        </form> */}
-
-
-        <div className="flex w-full items-center justify-end space-x-2 pt-6">
-          <Button disabled={loading} variant="outline" onClick={onClose}>
-            Cancel
+          <Button className="w-full bg-primary mt-4 text-white" type='submit'>
+                          Submit
           </Button>
-          <Button disabled={loading} variant="destructive">
-            OK
-          </Button>
-        </div>
-      </Modal>
+        </form>
+      </FormProvider>
+    </Modal>
     </>
   );
 }
