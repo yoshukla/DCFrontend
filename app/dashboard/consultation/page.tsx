@@ -1,12 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/layout/page-container';
 import { UserClient } from '@/components/tables/user-tables/client';
 import { users } from '@/constants/data';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
-import Heading from '@/components/Heading/page-heading'; 
+import Heading from '@/components/Heading/page-heading';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import {
@@ -24,21 +24,20 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'; 
+} from '@/components/ui/card';
 
 const breadcrumbItems = [
   { title: 'Dashboard', link: '/dashboard' },
   { title: 'Consultation', link: '/dashboard/consultation' }
 ];
 
-export default function page() {
+export default function Page() { 
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
- 
+
   const onClose = () => {
     setIsOpen(false)
-  };
-
+  }; 
 
   return (
     <>
@@ -47,7 +46,7 @@ export default function page() {
           <Breadcrumbs items={breadcrumbItems} />
         </div>
 
-        <Heading heading={"Consultation"} />  
+        <Heading heading={"Consultation"} />
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-full">
@@ -83,7 +82,7 @@ export default function page() {
             <hr></hr>
             <div className="flex justify-end">
               <p>niha</p>
-            </div> 
+            </div>
 
             <Tabs defaultValue="overview" className="space-y-4">
               <TabsList>
@@ -92,7 +91,7 @@ export default function page() {
                   Analytics
                 </TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="overview" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                   <Card>
@@ -198,7 +197,7 @@ export default function page() {
                   </Card>
                 </div>
 
-              </TabsContent> 
+              </TabsContent>
 
               <TabsContent value="analytics" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -318,7 +317,7 @@ export default function page() {
         isOpen={isOpen}
         onClose={onClose}>
         <hr></hr>
-{/* 
+        {/* 
         <form
           className="w-full space-y-1"
         >
