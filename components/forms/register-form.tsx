@@ -39,8 +39,7 @@ type UserFormValue = z.infer<typeof formSchema>;
 
 export default function RegisterForm() {
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl');
-    const [loading, setLoading] = useState(false);
+     const [loading, setLoading] = useState(false);
     const defaultValues = {
         email: 'medilog@gmail.com'
     };
@@ -52,7 +51,7 @@ export default function RegisterForm() {
     const onSubmit = async (data: UserFormValue) => {
         signIn('credentials', {
             email: data.email,
-            callbackUrl: callbackUrl ?? '/dashboard'
+            callbackUrl:'/dashboard'
         });
     };
 

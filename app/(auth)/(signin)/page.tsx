@@ -10,8 +10,8 @@ import { url } from 'inspector';
 
 
 export const metadata: Metadata = {
-  title: 'Authentication',
-  description: 'Authentication forms built using the components.'
+  title: 'ML-DC-Login',
+  description: 'DOctor Login for Ml Portal'
 };
 
 export default function AuthenticationPage() {

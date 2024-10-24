@@ -9,7 +9,7 @@ import GoogleSignInBtn from '../public/images/google.png';
 
 export default function GoogleSignInButton() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+  const callbackUrl = searchParams.get('callbackUrl'); 
 
   return (
     <Button

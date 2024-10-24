@@ -9,7 +9,7 @@ import AppleSignInBtn from '../public/images/apple-logo.png';
 
 export default function AppleSignInButton() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+  const callbackUrl = searchParams.get('callbackUrl'); 
 
   return (
     <Button

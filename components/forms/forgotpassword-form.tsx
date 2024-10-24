@@ -28,8 +28,7 @@ const formSchema = z.object({
 type UserFormValue = z.infer<typeof formSchema>;
 
 export default function ForgotPasswordForm() {
-    const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl');
+    const searchParams = useSearchParams(); 
     const [loading, setLoading] = useState(false);
     const defaultValues = {
         email: 'medilog@gmail.com'
@@ -42,7 +41,7 @@ export default function ForgotPasswordForm() {
     const onSubmit = async (data: UserFormValue) => {
         signIn('credentials', {
             email: data.email,
-            callbackUrl: callbackUrl ?? '/dashboard'
+            callbackUrl:'/dashboard'
         });
     };
 

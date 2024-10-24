@@ -12,15 +12,22 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Link } from 'lucide-react';
 import GoogleSignInButton from '../google-auth-button copy';
 import AppleSignInButton from '../apple-auth-button';
+import { getErrorMessage } from '@/lib/utils';
+import toast, { Toaster } from 'react-hot-toast';
 
 const formSchema = z.object({
-    email: z.string().email({ message: 'Enter a valid email address' })
+    mlid: z.string()
+        .min(1, { message: 'ML-ID is required' })
+        .regex(/^[a-zA-Z0-9]*$/, { message: 'ML-ID must be alphanumeric' }), // Alphanumeric validation
+    password: z.string()
+        .min(6, { message: 'Password must be at least 6 characters long' }) // Minimum length validation
+        .regex(/[^\s]+/, { message: 'Password cannot be empty' }) // Optional: Ensure password is not just whitespace
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
@@ -31,25 +38,39 @@ interface LoginFormProps {
   }
 
   export default function LoginForm({ onForgotPassword, onRegister }: LoginFormProps) {
-    const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl');
+ 
+    const searchParams = useSearchParams(); 
+    const error = searchParams.get('error');
     const [loading, setLoading] = useState(false);
+
+
     const defaultValues = {
-        email: 'medilog@gmail.com'
+        mlid: '',
+        password: ''
     };
     const form = useForm<UserFormValue>({
         resolver: zodResolver(formSchema),
         defaultValues
     });
 
-    const onSubmit = async (data: UserFormValue) => {
+    const onSubmit = async (data: UserFormValue) => { 
         signIn('credentials', {
-            email: data.email,
-            callbackUrl: callbackUrl ?? '/dashboard'
+            mlid: data.mlid,
+            password: data.password,
+            callbackUrl:'/dashboard'
         });
     };
+    const errorHandled = useRef(false); // Ref to track if error has been handled
 
-    
+    useEffect(() => {
+        // Show toast notification if there's an error
+        if (error && !errorHandled.current) {
+            toast.error(getErrorMessage(error)); // Use utility function here
+            errorHandled.current = true; // Mark error as handled
+        } else if (!error) {
+            errorHandled.current = false; // Reset when there's no error
+        }
+    }, [error]);
 
     return (
 
@@ -63,41 +84,44 @@ interface LoginFormProps {
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="w-full space-y-1"
-                >
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <>
-                                <FormItem>
-                                    <FormLabel>Doctor ML Id</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="email"
-                                            placeholder="Doctor ML Id"
-                                            disabled={loading}
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                </FormItem>
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-
-                                    <FormControl>
-                                        <Input
-                                            type="password"
-                                            placeholder="Password"
-                                            disabled={loading}
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            </>
-                        )}
-                    />
-
-
+                > 
+                <FormField
+                    control={form.control}
+                    name='mlid' // Ensure this name matches the schema
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Doctor ML Id</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="text"
+                                    placeholder="Doctor ML Id"
+                                    disabled={loading}
+                                    {...field} // Spread field props here
+                                />
+                            </FormControl>
+                            <FormMessage /> {/* This will show error for mlid */}
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name='password' // Ensure this name matches the schema
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="password"
+                                    placeholder="Password"
+                                    disabled={loading}
+                                    {...field} // Spread field props here
+                                />
+                            </FormControl>
+                            <FormMessage /> {/* This will show error for password */}
+                        </FormItem>
+                    )}
+                />
+ 
                     <div className='flex gap-2 justify-between pt-2 pb-2'>
                         <div>
                             <input type='checkbox' />
@@ -127,6 +151,7 @@ interface LoginFormProps {
                 <AppleSignInButton />
                 <GoogleSignInButton />
             </div>
+            <Toaster position="top-right" reverseOrder={false} />
         </>
 
     );
