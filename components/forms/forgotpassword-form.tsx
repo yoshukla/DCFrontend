@@ -18,6 +18,8 @@ import * as z from 'zod';
 import { Link } from 'lucide-react';
 import GoogleSignInButton from '../google-auth-button copy';
 import AppleSignInButton from '../apple-auth-button';
+import Required from '@/components/forms/required';
+
 
 const formSchema = z.object({
     email: z.string().email({ message: 'Enter a valid email address' })
@@ -90,25 +92,25 @@ export default function ForgotPasswordForm() {
                                 <p className='text-left text-black py-2'>Not received your code? <span className='text-red-500 font-semibold cursor-pointer'>Resend code</span></p>
 
                                 <FormItem>
-                                    <FormLabel>New Password</FormLabel>
+                                    <FormLabel>New Password<Required /></FormLabel>
                                     <FormControl>
                                         <Input
                                             type="password"
                                             placeholder="New Password"
                                             disabled={loading}
-                                            // {...field}
+                                        // {...field}
                                         />
                                     </FormControl>
                                 </FormItem>
 
                                 <FormItem>
-                                    <FormLabel>Confirm Password</FormLabel>
+                                    <FormLabel>Confirm Password<Required /></FormLabel>
                                     <FormControl>
                                         <Input
                                             type="password"
                                             placeholder="Confirm Password"
                                             disabled={loading}
-                                            // {...field}
+                                        // {...field}
                                         />
                                     </FormControl>
                                     <FormMessage />

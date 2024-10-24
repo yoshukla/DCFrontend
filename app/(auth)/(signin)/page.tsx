@@ -24,7 +24,7 @@ export default function AuthenticationPage() {
         >
         <div className="absolute inset-0 bg-[#EFF6FF]" />
         <div className="relative z-20 flex items-center text-lg font-medium">
-          <Image src={logo} alt='logo' width={80} height={80} />
+          {/* <Image src={logo} alt='logo' width={80} height={80} /> */}
           {/* <p>niha</p> */}
         </div>
 
@@ -48,8 +48,7 @@ export default function AuthenticationPage() {
       </div>
 
       <div className="flex sm:h-full bg-[#EFF6FF] justify-center items-center p-4 lg:p-6">
-        <div className="mx-auto flex w-full bg-white rounded-sm flex-col justify-center p-4 lg:p-6 space-y-2 sm:w-[450px]">
-
+        <div className="mx-auto flex w-full bg-white rounded-sm flex-col justify-center p-4 lg:p-6 space-y-2 sm:w-[550px]">
           <UserAuthForm />
         </div>
 

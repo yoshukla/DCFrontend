@@ -18,8 +18,7 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue
-} from '@/components/ui/select';
-
+} from '@/components/ui/select'; 
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
@@ -29,7 +28,8 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import plusIcon from '../../public/images/plusIcon.svg'
 import * as z from 'zod';
-import { Checkbox } from '@/components/ui/checkbox';
+import Required from '@/components/forms/required';
+
 
 const formSchema = z.object({
     email: z.string().email({ message: 'Enter a valid email address' })
@@ -75,104 +75,104 @@ export default function RegisterForm() {
                         render={({ field }) => (
                             <>
                                 {/* <FormItem>
-                                     <FormControl>
-                                        <FileUpload
-                                            onChange={field.onChange}
-                                            value={""}
-                                            onRemove={field.onChange}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem> */}
-
-                                <div className='sm:flex gap-4'>
-                                    <FormItem>
-                                        <FormLabel>Full Name</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                type="text"
-                                                placeholder="Name"
-                                                disabled={loading}
-
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-
-                                    <FormItem>
-                                        <FormLabel>Date of Birth</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="date"
-                                                placeholder="Name"
-                                                disabled={loading}
-
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-
-                                </div>
-                                <div className='sm:flex gap-4'>
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="mail"
-                                                placeholder="Email"
-                                                disabled={loading}
-
+                                            <FileUpload
+                                                onChange={field.onChange}
+                                                value={""}
+                                                onRemove={field.onChange}
                                             />
                                         </FormControl>
                                         <FormMessage />
-                                    </FormItem>
+                                    </FormItem> */}
 
-                                    <FormItem>
-                                        <FormLabel>License Registration ID</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="text"
-                                                placeholder="License Registration ID"
-                                                disabled={loading}
+                                <div className='sm:flex gap-4 mb-4'>
+                                    <div className='sm:w-1/2'>
+                                        <FormItem>
+                                            <FormLabel>Full Name<Required /></FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="text"
+                                                    placeholder="Name"
+                                                    disabled={loading}
 
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    </div>
+                                    <div className='sm:w-1/2'>
+                                        <FormItem>
+                                            <FormLabel>Date of Birth<Required /> </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="date"
+                                                    placeholder="Name"
+                                                    disabled={loading}
+
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    </div>
                                 </div>
 
-                                <div className='sm:flex gap-4'>
-                                    <FormItem>
-                                        <FormLabel>Mobile Number</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="number"
-                                                placeholder="Mobile Number"
-                                                disabled={loading}
+                                <div className='sm:flex gap-4 mb-4'>
+                                    <div className='sm:w-1/2'>
 
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
+                                        <FormItem>
+                                            <FormLabel>Email<Required /></FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="mail"
+                                                    placeholder="Email"
+                                                    disabled={loading}
 
-                                    <FormItem>
-                                        <FormLabel>Emergency Contact Number</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="number"
-                                                placeholder="Contact Number"
-                                                disabled={loading}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    </div>
+                                    <div className='sm:w-1/2'>
 
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
+                                        <FormItem>
+                                            <FormLabel>Mobile Number<Required /></FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="number"
+                                                    placeholder="Mobile Number"
+                                                    disabled={loading}
 
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    </div>
                                 </div>
-
-                                <div className='sm:flex gap-4'>
+                                {/* 
+                                <div className='sm:flex gap-4 mb-4'>
+                                    <div className='sm:w-1/2'>
+                                      
+                                    </div>
 
                                     <div className='sm:w-1/2'>
                                         <FormItem>
-                                            <FormLabel>City/Town</FormLabel>
+                                            <FormLabel>Emergency Contact Number</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="number"
+                                                    placeholder="Contact Number"
+                                                    disabled={loading}
+
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    </div>
+                                </div> */}
+
+                                <div className='sm:flex gap-4 mb-4'>
+
+                                    <div className='sm:w-1/2'>
+                                        <FormItem>
+                                            <FormLabel>City/Town<Required /></FormLabel>
                                             <Select
                                                 disabled={loading}
                                                 onValueChange={field.onChange}
@@ -203,7 +203,7 @@ export default function RegisterForm() {
 
                                     <div className='sm:w-1/2'>
                                         <FormItem>
-                                            <FormLabel>State</FormLabel>
+                                            <FormLabel>State<Required /></FormLabel>
                                             <Select
                                                 disabled={loading}
                                                 onValueChange={field.onChange}
@@ -233,7 +233,7 @@ export default function RegisterForm() {
                                     </div>
                                 </div>
 
-                                <div className='sm:flex gap-4'>
+                                {/* <div className='sm:flex gap-4 mb-4'>
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
@@ -259,11 +259,11 @@ export default function RegisterForm() {
                                         <FormMessage />
                                     </FormItem>
 
-                                </div>
+                                </div> */}
 
                                 <div className='border rounded-md p-3 mt-3'>
                                     <FormItem>
-                                        <FormLabel>Qualifications</FormLabel>
+                                        <FormLabel>Qualifications<Required /></FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="text"
@@ -275,11 +275,11 @@ export default function RegisterForm() {
                                         <FormMessage />
                                     </FormItem>
 
-                                    <div className='sm:flex gap-4'>
+                                    <div className='sm:flex gap-4 my-4'>
 
                                         <div className='sm:w-1/2'>
                                             <FormItem>
-                                                <FormLabel>Medical College Name</FormLabel>
+                                                <FormLabel>Medical College Name<Required /></FormLabel>
                                                 <Select
                                                     disabled={loading}
                                                     onValueChange={field.onChange}
@@ -310,7 +310,7 @@ export default function RegisterForm() {
 
                                         <div className='sm:w-1/2'>
                                             <FormItem>
-                                                <FormLabel>Course Year</FormLabel>
+                                                <FormLabel>Course Year<Required /></FormLabel>
                                                 <Select
                                                     disabled={loading}
                                                     onValueChange={field.onChange}
@@ -340,19 +340,31 @@ export default function RegisterForm() {
                                         </div>
                                     </div>
 
+                                    <FormItem>
+                                        <FormLabel>License Registration ID<Required /></FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                placeholder="License Registration ID"
+                                                disabled={loading}
+
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
                                 </div>
 
-                                <div className='text-primary font-semibold cursor-pointer my-2 flex gap-1 justify-end'>
+                                {/* <div className='text-primary font-semibold cursor-pointer my-2 flex gap-1 justify-end'>
                                     Add
                                     <Image src={plusIcon} alt='plusIcon' width={15} height={15} />
-                                </div>
+                                </div> */}
 
-                                <div className='text-sm font-medium'>
-                                <input type='checkbox' />
-                                <label>  By signing up you agree to our 
-                                 <span className='text-[#db710e] underline cursor-pointer'>Terms & Conditions</span> and  
-                                 <span className='text-[#db710e] underline cursor-pointer'>Privacy Policy </span>
-                                 </label> 
+                                <div className='text-sm font-medium my-2'>
+                                    <input type='checkbox' />
+                                    <label>  By signing up you agree to our{' '}
+                                        <span className='text-[#db710e] underline cursor-pointer'>Terms & Conditions</span>{' '}and{' '}
+                                        <span className='text-[#db710e] underline cursor-pointer'>Privacy Policy </span>
+                                    </label>
                                 </div>
                             </>
                         )}
