@@ -32,7 +32,19 @@ import Required from '@/components/forms/required';
 
 
 const formSchema = z.object({
-    email: z.string().email({ message: 'Enter a valid email address' })
+    mail: z.string().email({ message: 'Enter a valid email address' }),
+    firstname: z.string().email({ message: ' ' }),
+    lastname: z.string().email({ message: '' }),
+    email: z.string().email({ message: 'Enter a valid email address' }),
+    mobilenumber: z.string().email({ message: '' }),
+    city: z.string().email({ message: '' }),
+    state: z.string().email({ message: '' }),
+    qualifications: z.string().email({ message: '' }),
+    college: z.string().email({ message: '' }),
+    courseyear: z.string().email({ message: ' ' }),
+    licenseregistrationID: z.string().email({ message: '' }),
+
+    
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
