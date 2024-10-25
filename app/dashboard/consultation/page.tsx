@@ -6,28 +6,38 @@ import { UserClient } from '@/components/tables/user-tables/client';
 import { users } from '@/constants/data';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
-import Heading from '@/components/Heading/page-heading'; 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; 
+import Heading from '@/components/Heading/page-heading';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useForm, FormProvider, useFormContext, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod'; 
- 
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input'; 
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+
+import { Input } from '@/components/ui/input';
 import { signIn } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation'; 
+import { useSearchParams } from 'next/navigation';
 import * as z from 'zod';
 import Required from '@/components/forms/required';
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
@@ -41,10 +51,27 @@ const schema = z.object({
   doctorMLId: z.string().nonempty({ message: "Doctor ML Id is required" })
   // Add any other fields and validations as necessary
 });
-  
+
+const formSchema = z.object({
+  email: z.string().email({ message: 'Enter a valid email address' })
+});
+
+type UserFormValue = z.infer<typeof formSchema>;
+
+
 export default function Page() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+
+
+
+  const defaultValues = {
+    email: 'medilog@gmail.com'
+  };
+  const form = useForm<UserFormValue>({
+    resolver: zodResolver(formSchema),
+    defaultValues
+  });
 
   const methods = useForm({
     resolver: zodResolver(schema) // Include your resolver if you're using Zod
@@ -54,12 +81,41 @@ export default function Page() {
     console.log('Submitted Data:', data);
     // Add your submit logic here
   };
- 
+
   const onClose = () => {
     setIsOpen(false)
   };
 
- 
+  const diagnosisData = [
+    {
+      id: 1,
+      title: "Chief Complaint:",
+      content: "Pain in left ankle",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+    {
+      id: 2,
+      title: "Chief Complaint:",
+      content: "Flu Symptoms",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+    {
+      id: 3,
+      title: "Chief Complaint:",
+      content: "Cold & Cough",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+    {
+      id: 4,
+      title: "Chief Complaint:",
+      content: "Skin Allergy",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+  ];
 
   return (
     <>
@@ -73,26 +129,26 @@ export default function Page() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-full">
             <CardTitle className="text-sm font-medium w-full">
-              <div className='flex justify-between w-full'>
+              <div className='flex justify-between w-full flex-nowrap'>
 
-                <div>
-                  Patient Name : <span>User Name</span>
+                <div className='w-1/5'>
+                  Patient Name :<span className='font-semibold'>{' '} Niharika</span>
                 </div>
 
-                <div>
-                  Patient ID : M1234567890
+                <div className='w-1/5'>
+                  Patient ID :<span className='font-semibold'>{' '}M1234567890</span>
                 </div>
 
-                <div>
-                  Date of Birth : 01-01-1956
+                <div className='w-1/5'>
+                  Date of Birth :<span className='font-semibold'>{' '}01-01-1956</span>
                 </div>
 
-                <div>
-                  Gender : Male
+                <div className='w-1/6'>
+                  Gender :<span className='font-semibold'>{' '}Female</span>
                 </div>
 
-                <div>
-                  Address : Hyderabad, Telangana
+                <div className='w-1/4'>
+                  Address :<span className='font-semibold'>{' '}Hyderabad, Telangana</span>
                 </div>
 
               </div>
@@ -102,230 +158,178 @@ export default function Page() {
           </CardHeader>
           <CardContent>
             <hr></hr>
-            <div className="flex justify-end">
-              <p>niha</p>
+            <div className="flex my-5 ml-auto justify-end sm:w-1/4">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="w-full">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <>
+                        <FormItem>
+                          <Select
+                            disabled={loading}
+                            onValueChange={field.onChange}
+                            value={field.value}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue
+                                  defaultValue={field.value}
+                                  placeholder="Select"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value='Select'>
+                                Select
+                              </SelectItem>
+
+                              <SelectItem value='patient-summary'>
+                                Patient Summary
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+
+
+
+
+
+
+
+
+                      </>
+                    )}
+                  />
+
+
+                </form>
+              </Form>
+
             </div>
 
-            <Tabs defaultValue="overview" className="space-y-4">
+            <Tabs defaultValue="diagnosis" className="space-y-4">
               <TabsList>
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="analytics">
-                  Analytics
-                </TabsTrigger>
+                <TabsTrigger value="diagnosis">Diagnosis</TabsTrigger>
+                <TabsTrigger value="vitals">Vitals</TabsTrigger>
+                <TabsTrigger value="bmi">BMI</TabsTrigger>
+                <TabsTrigger value="procedures">Procedures</TabsTrigger>
               </TabsList>
+              <div className='flex gap-4 justify-end'>
+                <Button className="bg-[#15B001] text-white" type='submit' >
+                  +  Add
+                </Button>
+                <Button className="bg-[#F8AE02] text-white" type='submit' >
+                  Show All
+                </Button>
 
-              <TabsContent value="overview" className="space-y-4">
+              </div>
+
+
+              <TabsContent value="diagnosis" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        Total Revenue
-                      </CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">$45,231.89</div>
-                      <p className="text-xs text-muted-foreground">
-                        +20.1% from last month
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        Subscriptions
-                      </CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">+2350</div>
-                      <p className="text-xs text-muted-foreground">
-                        +180.1% from last month
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <rect width="20" height="14" x="2" y="5" rx="2" />
-                        <path d="M2 10h20" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">+12,234</div>
-                      <p className="text-xs text-muted-foreground">
-                        +19% from last month
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        Active Now
-                      </CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">+573</div>
-                      <p className="text-xs text-muted-foreground">
-                        +201 since last hour
-                      </p>
-                    </CardContent>
-                  </Card>
+                  {diagnosisData.map((data) => (
+                    <Card key={data.id}>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                        <CardTitle className="text-sm font-medium">
+                          {data.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-primary font-semibold text-sm">
+                          {data.content}
+                        </p>
+                      </CardContent>
+                      <CardFooter>
+                        <div className="flex justify-between text-sm w-full">
+                          <p>{data.date}</p>
+                          <p>{data.doctor}</p>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="vitals" className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  {diagnosisData.map((data) => (
+                    <Card key={data.id}>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                        <CardTitle className="text-sm font-medium">
+                          {data.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-primary font-semibold text-sm">
+                          {data.content}
+                        </p>
+                      </CardContent>
+                      <CardFooter>
+                        <div className="flex justify-between text-sm w-full">
+                          <p>{data.date}</p>
+                          <p>{data.doctor}</p>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  ))}
                 </div>
 
               </TabsContent>
 
-              <TabsContent value="analytics" className="space-y-4">
+              <TabsContent value="bmi" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        Total Revenue analytics
-                      </CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">$45,231.89</div>
-                      <p className="text-xs text-muted-foreground">
-                        +20.1% from last month
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        Subscriptions
-                      </CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">+2350</div>
-                      <p className="text-xs text-muted-foreground">
-                        +180.1% from last month
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <rect width="20" height="14" x="2" y="5" rx="2" />
-                        <path d="M2 10h20" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">+12,234</div>
-                      <p className="text-xs text-muted-foreground">
-                        +19% from last month
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        Active Now
-                      </CardTitle>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="h-4 w-4 text-muted-foreground"
-                      >
-                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                      </svg>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">+573</div>
-                      <p className="text-xs text-muted-foreground">
-                        +201 since last hour
-                      </p>
-                    </CardContent>
-                  </Card>
+                  {diagnosisData.map((data) => (
+                    <Card key={data.id}>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                        <CardTitle className="text-sm font-medium">
+                          {data.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-primary font-semibold text-sm">
+                          {data.content}
+                        </p>
+                      </CardContent>
+                      <CardFooter>
+                        <div className="flex justify-between text-sm w-full">
+                          <p>{data.date}</p>
+                          <p>{data.doctor}</p>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  ))}
                 </div>
+              </TabsContent>
 
+              <TabsContent value="procedures" className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  {diagnosisData.map((data) => (
+                    <Card key={data.id}>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                        <CardTitle className="text-sm font-medium">
+                          {data.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-primary font-semibold text-sm">
+                          {data.content}
+                        </p>
+                      </CardContent>
+                      <CardFooter>
+                        <div className="flex justify-between text-sm w-full">
+                          <p>{data.date}</p>
+                          <p>{data.doctor}</p>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
               </TabsContent>
             </Tabs>
 
@@ -334,42 +338,42 @@ export default function Page() {
       </PageContainer>
 
       <Modal
-      title="Consultation"
-      description=""
-      isOpen={isOpen}
-      onClose={onClose}>
-      <hr />
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <FormField
-            name="doctorMLId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Doctor ML Id</FormLabel>
-                <FormControl>
-                  <Controller
-                    name="doctorMLId" // Ensure this matches the schema
-                    control={methods.control}
-                    render={({ field }) => (
-                      <Input
-                        type="text"
-                        placeholder="Doctor ML Id"
-                        disabled={false} // Set loading condition if necessary
-                        {...field} // Spread field props here
-                      />
-                    )}
-                  />
-                </FormControl>
-                {/* <FormMessage>{methods.formState.errors.doctorMLId?.message}</FormMessage> */}
-              </FormItem>
-            )}
-          />
-          <Button className="w-full bg-primary mt-4 text-white" type='submit'>
-                          Submit
-          </Button>
-        </form>
-      </FormProvider>
-    </Modal>
+        title="Consultation"
+        description=""
+        isOpen={isOpen}
+        onClose={onClose}>
+        <hr />
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <FormField
+              name="doctorMLId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Doctor ML Id</FormLabel>
+                  <FormControl>
+                    <Controller
+                      name="doctorMLId" // Ensure this matches the schema
+                      control={methods.control}
+                      render={({ field }) => (
+                        <Input
+                          type="text"
+                          placeholder="Doctor ML Id"
+                          disabled={false} // Set loading condition if necessary
+                          {...field} // Spread field props here
+                        />
+                      )}
+                    />
+                  </FormControl>
+                  {/* <FormMessage>{methods.formState.errors.doctorMLId?.message}</FormMessage> */}
+                </FormItem>
+              )}
+            />
+            <Button className="w-full bg-primary mt-4 text-white" type='submit'>
+              Submit
+            </Button>
+          </form>
+        </FormProvider>
+      </Modal>
     </>
   );
 }
