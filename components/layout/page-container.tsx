@@ -16,7 +16,7 @@ export default function PageContainer({
           <div className="h-full  p-4 md:px-8">{children}</div>
         </ScrollArea>
       ) : (
-        <div className="h-full  p-4 md:px-8  bg-[#EFF6FF]"
+        <div className="h-full p-4 md:px-8 "
           style={{ backgroundImage: `url('images/formBg.svg')`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }} >
           {children}</div>
       )}

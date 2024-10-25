@@ -141,7 +141,7 @@ export default function Page() {
       ]
     }
   ];
-  
+
   const proceduresData = [
     {
       id: 1,
@@ -214,17 +214,17 @@ export default function Page() {
           </CardHeader>
           <CardContent>
             <hr></hr>
-            <div className="flex my-5 ml-auto justify-end sm:w-1/4">
+            <div className="flex my-5 ml-auto justify-end sm:w-1/4"> 
+
               <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="w-full">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <>
+                <form className="w-full space-y-8">
+                  <div> 
+                    <FormField
+                      control={form.control}
+                      name="city"
+                      render={({ field }) => (
                         <FormItem>
+                          {/* <FormLabel>City</FormLabel> */}
                           <Select
                             disabled={loading}
                             onValueChange={field.onChange}
@@ -235,167 +235,155 @@ export default function Page() {
                               <SelectTrigger>
                                 <SelectValue
                                   defaultValue={field.value}
-                                  placeholder="Select"
+                                  placeholder="Patient Summary"
                                 />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value='Select'>
-                                Select
-                              </SelectItem>
 
                               <SelectItem value='patient-summary'>
                                 Patient Summary
                               </SelectItem>
+
                             </SelectContent>
                           </Select>
                           <FormMessage />
                         </FormItem>
+                      )}
+                    /> 
+                </div> 
+              </form>
+            </Form>
 
+          </div>
 
-
-
-
-
-
-
-                      </>
-                    )}
-                  />
-
-
-                </form>
-              </Form>
+          <Tabs defaultValue="diagnosis" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="diagnosis">Diagnosis</TabsTrigger>
+              <TabsTrigger value="vitals">Vitals</TabsTrigger>
+              <TabsTrigger value="bmi">BMI</TabsTrigger>
+              <TabsTrigger value="procedures">Procedures</TabsTrigger>
+            </TabsList>
+            <div className='flex gap-4 justify-end'>
+              <Button className="bg-[#15B001] text-white" type='submit' >
+                +  Add
+              </Button>
+              <Button className="bg-[#F8AE02] text-white" type='submit' >
+                Show All
+              </Button>
 
             </div>
 
-            <Tabs defaultValue="diagnosis" className="space-y-4">
-              <TabsList>
-                <TabsTrigger value="diagnosis">Diagnosis</TabsTrigger>
-                <TabsTrigger value="vitals">Vitals</TabsTrigger>
-                <TabsTrigger value="bmi">BMI</TabsTrigger>
-                <TabsTrigger value="procedures">Procedures</TabsTrigger>
-              </TabsList>
-              <div className='flex gap-4 justify-end'>
-                <Button className="bg-[#15B001] text-white" type='submit' >
-                  +  Add
-                </Button>
-                <Button className="bg-[#F8AE02] text-white" type='submit' >
-                  Show All
-                </Button>
+
+            <TabsContent value="diagnosis" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                {diagnosisData.map((data) => (
+                  <Card key={data.id}>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                      <CardTitle className="text-sm font-medium">
+                        {data.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-primary font-semibold text-sm">
+                        {data.content}
+                      </p>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="flex justify-between text-[13px] w-full">
+                        <p>{data.date}</p>
+                        <p>{data.doctor}</p>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="vitals" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                {vitalsData.map((record, index) => (
+                  <Card key={index}>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                      <CardTitle className="text-sm font-medium">{' '}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className='space-y-2 font-semibold text-sm'>
+                        {record.measurements.map((measurement, index) => (
+                          <div className='flex' key={index}>
+                            <p className='text-[#0EBB13] w-1/2'>{measurement.label}:</p>
+                            <span className='text-primary w-1/2'> {measurement.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="flex justify-between text-[13px] w-full">
+                        <p>{record.doctor}</p>
+                        <p>{record.date}</p>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                ))}
+
 
               </div>
+            </TabsContent>
 
+            <TabsContent value="bmi" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                {diagnosisData.map((data) => (
+                  <Card key={data.id}>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                      <CardTitle className="text-sm font-medium">
+                        {data.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-primary font-semibold text-sm">
+                        {data.content}
+                      </p>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="flex justify-between text-[13px] w-full">
+                        <p>{data.date}</p>
+                        <p>{data.doctor}</p>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
 
-              <TabsContent value="diagnosis" className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {diagnosisData.map((data) => (
-                    <Card key={data.id}>
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-                        <CardTitle className="text-sm font-medium">
-                          {data.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-primary font-semibold text-sm">
-                          {data.content}
-                        </p>
-                      </CardContent>
-                      <CardFooter>
-                        <div className="flex justify-between text-[13px] w-full">
-                          <p>{data.date}</p>
-                          <p>{data.doctor}</p>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
+            <TabsContent value="procedures" className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                {proceduresData.map((data) => (
+                  <Card key={data.id}>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                      <CardTitle className="text-sm font-medium">
+                        {data.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-primary font-semibold text-sm">
+                        {data.content}
+                      </p>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="flex justify-between text-[13px] w-full">
+                        <p>{data.date}</p>
+                        <p>{data.doctor}</p>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
 
-              <TabsContent value="vitals" className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"> 
-                  {vitalsData.map((record, index) => (
-                    <Card key={index}>
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-                        <CardTitle className="text-sm font-medium">{' '}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className='space-y-2 font-semibold text-sm'>
-                          {record.measurements.map((measurement, index) => (
-                            <div className='flex' key={index}>
-                              <p className='text-[#0EBB13] w-1/2'>{measurement.label}:</p>
-                              <span className='text-primary w-1/2'> {measurement.value}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <div className="flex justify-between text-[13px] w-full">
-                          <p>{record.doctor}</p>
-                          <p>{record.date}</p>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  ))}
-
-
-                </div> 
-              </TabsContent>
-
-              <TabsContent value="bmi" className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {diagnosisData.map((data) => (
-                    <Card key={data.id}>
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-                        <CardTitle className="text-sm font-medium">
-                          {data.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-primary font-semibold text-sm">
-                          {data.content}
-                        </p>
-                      </CardContent>
-                      <CardFooter>
-                        <div className="flex justify-between text-[13px] w-full">
-                          <p>{data.date}</p>
-                          <p>{data.doctor}</p>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="procedures" className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {proceduresData.map((data) => (
-                    <Card key={data.id}>
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-                        <CardTitle className="text-sm font-medium">
-                          {data.title}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-primary font-semibold text-sm">
-                          {data.content}
-                        </p>
-                      </CardContent>
-                      <CardFooter>
-                        <div className="flex justify-between text-[13px] w-full">
-                          <p>{data.date}</p>
-                          <p>{data.doctor}</p>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
-
-          </CardContent>
-        </Card>
-      </PageContainer>
+        </CardContent>
+      </Card>
+    </PageContainer >
 
       <Modal
         title="Consultation"

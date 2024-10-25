@@ -30,19 +30,19 @@ export const columns: ColumnDef<Employee>[] = [
   },
   {
     accessorKey: 'country',
-    header: 'COUNTRY'
+    header: 'STARTING DATE'
   },
   {
     accessorKey: 'email',
-    header: 'EMAIL'
+    header: 'MEDILOG ID'
   },
   {
     accessorKey: 'job',
-    header: 'COMPANY'
+    header: 'PRIORITY'
   },
   {
     accessorKey: 'gender',
-    header: 'GENDER'
+    header: 'LOCATION'
   },
   {
     id: 'actions',

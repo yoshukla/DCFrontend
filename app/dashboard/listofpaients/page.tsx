@@ -3,16 +3,16 @@ import PageContainer from '@/components/layout/page-container';
 import { columns } from '@/components/tables/employee-tables/columns';
 import { EmployeeTable } from '@/components/tables/employee-tables/employee-table';
 import { buttonVariants } from '@/components/ui/button';
-import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
 import { Employee } from '@/constants/data';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
+import Heading from '@/components/Heading/page-heading'; 
 
 const breadcrumbItems = [
   { title: 'Dashboard', link: '/dashboard' },
-  { title: 'Employee', link: '/dashboard/employee' }
+  { title: 'List of paients', link: '/dashboard/listofpaients' }
 ];
 
 type paramsProps = {
@@ -41,16 +41,14 @@ export default async function page({ searchParams }: paramsProps) {
         <Breadcrumbs items={breadcrumbItems} />
 
         <div className="flex items-start justify-between">
-          <Heading
-            title={`Employee (${totalUsers})`}
-            description="Manage employees (Server side table functionalities.)"
-          />
+
+        <Heading heading={`List of paients (${totalUsers})`} /> 
 
           <Link
-            href={'/dashboard/employee/new'}
-            className={cn(buttonVariants({ variant: 'default' }))}
+            href={'/dashboard/listofpaients/new'}
+            className={`${cn(buttonVariants({ variant: 'default' }))} text-white`}
           >
-            <Plus className="mr-2 h-4 w-4" /> Add New
+            <Plus className="mr-2 h-4 w-4 text-white" /> Add New
           </Link>
         </div>
         <Separator />
