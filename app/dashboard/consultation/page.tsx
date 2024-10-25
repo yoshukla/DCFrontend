@@ -53,7 +53,8 @@ const schema = z.object({
 });
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email address' })
+  email: z.string().email({ message: 'Enter a valid email address' }),
+  city: z.string().email({ message: '' }),
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
@@ -221,7 +222,7 @@ export default function Page() {
                   <div> 
                     <FormField
                       control={form.control}
-                      name="email"
+                      name="city"
                       render={({ field }) => (
                         <FormItem>
                           {/* <FormLabel>City</FormLabel> */}
