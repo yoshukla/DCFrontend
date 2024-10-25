@@ -117,6 +117,62 @@ export default function Page() {
     },
   ];
 
+  const vitalsData = [
+    {
+      doctor: "Dr John Doe",
+      date: "30 Jan 2024",
+      measurements: [
+        { label: "Body Temp", value: "991.4°F" },
+        { label: "Heart Rate", value: "72 BPM" },
+        { label: "Resp Rate", value: "14 bpm" },
+        { label: "Blood Pres", value: "100 / 70" },
+        { label: "Sp02", value: "98 %" }
+      ]
+    },
+    {
+      doctor: "Dr Jane Smith",
+      date: "31 Jan 2024",
+      measurements: [
+        { label: "Body Temp", value: "98.6°F" },
+        { label: "Heart Rate", value: "75 BPM" },
+        { label: "Resp Rate", value: "16 bpm" },
+        { label: "Blood Pres", value: "110 / 80" },
+        { label: "Sp02", value: "97 %" }
+      ]
+    }
+  ];
+  
+  const proceduresData = [
+    {
+      id: 1,
+      title: "Surgery :",
+      content: "Broken leg - Surgery",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+    {
+      id: 2,
+      title: "Procedure :",
+      content: "Endoscopy",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+    {
+      id: 3,
+      title: "Surgery :",
+      content: "Appendectomy",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+    {
+      id: 4,
+      title: "Surgery :",
+      content: "Tonsillectomy",
+      date: "30 Jan 2024",
+      doctor: "Dr John Doe"
+    },
+  ];
+
   return (
     <>
       <PageContainer>
@@ -132,7 +188,7 @@ export default function Page() {
               <div className='flex justify-between w-full flex-nowrap'>
 
                 <div className='w-1/5'>
-                  Patient Name :<span className='font-semibold'>{' '} Niharika</span>
+                  Patient Name :<span className='font-semibold'>{' '}Sahana</span>
                 </div>
 
                 <div className='w-1/5'>
@@ -246,7 +302,7 @@ export default function Page() {
                         </p>
                       </CardContent>
                       <CardFooter>
-                        <div className="flex justify-between text-sm w-full">
+                        <div className="flex justify-between text-[13px] w-full">
                           <p>{data.date}</p>
                           <p>{data.doctor}</p>
                         </div>
@@ -257,29 +313,33 @@ export default function Page() {
               </TabsContent>
 
               <TabsContent value="vitals" className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {diagnosisData.map((data) => (
-                    <Card key={data.id}>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"> 
+                  {vitalsData.map((record, index) => (
+                    <Card key={index}>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-                        <CardTitle className="text-sm font-medium">
-                          {data.title}
-                        </CardTitle>
+                        <CardTitle className="text-sm font-medium">{' '}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-primary font-semibold text-sm">
-                          {data.content}
-                        </p>
+                        <div className='space-y-2 font-semibold text-sm'>
+                          {record.measurements.map((measurement, index) => (
+                            <div className='flex' key={index}>
+                              <p className='text-[#0EBB13] w-1/2'>{measurement.label}:</p>
+                              <span className='text-primary w-1/2'> {measurement.value}</span>
+                            </div>
+                          ))}
+                        </div>
                       </CardContent>
                       <CardFooter>
-                        <div className="flex justify-between text-sm w-full">
-                          <p>{data.date}</p>
-                          <p>{data.doctor}</p>
+                        <div className="flex justify-between text-[13px] w-full">
+                          <p>{record.doctor}</p>
+                          <p>{record.date}</p>
                         </div>
                       </CardFooter>
                     </Card>
                   ))}
-                </div>
 
+
+                </div> 
               </TabsContent>
 
               <TabsContent value="bmi" className="space-y-4">
@@ -297,7 +357,7 @@ export default function Page() {
                         </p>
                       </CardContent>
                       <CardFooter>
-                        <div className="flex justify-between text-sm w-full">
+                        <div className="flex justify-between text-[13px] w-full">
                           <p>{data.date}</p>
                           <p>{data.doctor}</p>
                         </div>
@@ -309,7 +369,7 @@ export default function Page() {
 
               <TabsContent value="procedures" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {diagnosisData.map((data) => (
+                  {proceduresData.map((data) => (
                     <Card key={data.id}>
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
                         <CardTitle className="text-sm font-medium">
@@ -322,7 +382,7 @@ export default function Page() {
                         </p>
                       </CardContent>
                       <CardFooter>
-                        <div className="flex justify-between text-sm w-full">
+                        <div className="flex justify-between text-[13px] w-full">
                           <p>{data.date}</p>
                           <p>{data.doctor}</p>
                         </div>
