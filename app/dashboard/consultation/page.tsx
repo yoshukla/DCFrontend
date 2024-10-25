@@ -42,7 +42,7 @@ const schema = z.object({
   // Add any other fields and validations as necessary
 });
   
-export default function page() {
+export default function Page() {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
 
