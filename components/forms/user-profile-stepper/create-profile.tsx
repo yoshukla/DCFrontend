@@ -366,15 +366,11 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                         </FormControl>
                         <SelectContent>
                           {/* @ts-ignore  */}
-                          {/* {cities.map((city) => (
+                          {cities.map((city) => (
                             <SelectItem key={city.id} value={city.id}>
                               {city.name}
                             </SelectItem>
-                          ))} */}
-
-                          <SelectItem value='patient-summary'>
-                            Patient Summary
-                          </SelectItem>
+                          ))} 
 
                         </SelectContent>
                       </Select>
