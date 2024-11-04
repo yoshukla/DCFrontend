@@ -249,15 +249,14 @@ export default function RegisterForm() {
                                                     <div className="sm:flex gap-4 my-4">
                                                         <div className="sm:w-1/2">
                                                             <FormField
-                                                               control={form.control}
+                                                                control={form.control}
                                                                 name={`qualifications[${index}].college`}
                                                                 render={({ field }) => (
                                                                     <FormItem>
                                                                         <FormLabel>Medical College Name</FormLabel>
                                                                         <Select
-                                                                             onValueChange={field.onChange}
-                                                                             value={field.value}
-                                                                             defaultValue={field.value}
+                                                                            onValueChange={field.onChange}
+                                                                            value={field.value}
                                                                         >
                                                                             <FormControl>
                                                                                 <SelectTrigger>
@@ -285,9 +284,8 @@ export default function RegisterForm() {
                                                                     <FormItem>
                                                                         <FormLabel>Course Year</FormLabel>
                                                                         <Select
-                                                                          onValueChange={field.onChange}
-                                                                          value={field.value}
-                                                                          defaultValue={field.value}
+                                                                            onValueChange={field.onChange}
+                                                                            value={field.value}
                                                                         >
                                                                             <FormControl>
                                                                                 <SelectTrigger>
