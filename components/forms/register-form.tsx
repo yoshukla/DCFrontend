@@ -1,5 +1,15 @@
 'use client';
+import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger
+} from '@/components/ui/accordion';
+import { cn } from '@/lib/utils';
+import { AlertTriangleIcon, Trash, Trash2Icon } from 'lucide-react';
+
 import {
     Form,
     FormControl,
@@ -8,7 +18,7 @@ import {
     FormLabel,
     FormMessage
 } from '@/components/ui/form';
-
+import { useFieldArray } from 'react-hook-form';
 import FileUpload from '../file-upload';
 
 
@@ -44,7 +54,7 @@ const formSchema = z.object({
     courseyear: z.string().email({ message: ' ' }),
     licenseregistrationID: z.string().email({ message: '' }),
 
-    
+
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
@@ -52,13 +62,37 @@ type UserFormValue = z.infer<typeof formSchema>;
 export default function RegisterForm() {
     const searchParams = useSearchParams();
     const [loading, setLoading] = useState(false);
+    const { control, register, handleSubmit } = useForm();
+    const [formInstances, setFormInstances] = useState([{ id: Date.now() }]);
+
+    const { append, remove, fields } = useFieldArray({
+        control,
+        name: "qualifications"
+    });
+
+    const hasAppended = useRef(false);
+
+    useEffect(() => {
+        if (!hasAppended.current) {
+            hasAppended.current = true;
+            append({ qualification: "", college: "", courseyear: "", licenseregistrationID: "" });
+        }
+    }, []);
+
+    const handleAddForm = () => {
+        setFormInstances([...formInstances, { id: Date.now() }]);
+    };
     const defaultValues = {
         email: 'medilog@gmail.com'
     };
+
     const form = useForm<UserFormValue>({
         resolver: zodResolver(formSchema),
         defaultValues
     });
+
+
+
 
     const onSubmit = async (data: UserFormValue) => {
         signIn('credentials', {
@@ -77,9 +111,7 @@ export default function RegisterForm() {
                 </h1>
             </div>
             <Form {...form}>
-                <form
-                    // onSubmit={form.handleSubmit(onSubmit)}
-                    className="w-full">
+                <form className="w-full">
                     <FormField
                         control={form.control}
                         name="email"
@@ -87,6 +119,7 @@ export default function RegisterForm() {
                             <>
                                 <div className='sm:flex gap-4 mb-4'>
                                     <div className='sm:w-1/2'>
+                                        {/* First Name Field */}
                                         <FormField
                                             control={form.control}
                                             name="firstname"
@@ -107,7 +140,7 @@ export default function RegisterForm() {
                                     </div>
 
                                     <div className='sm:w-1/2'>
-
+                                        {/* Last Name Field */}
                                         <FormField
                                             control={form.control}
                                             name="lastname"
@@ -125,32 +158,13 @@ export default function RegisterForm() {
                                                 </FormItem>
                                             )}
                                         />
-
                                     </div>
                                 </div>
 
+                                {/* Other Fields */}
                                 <div className='sm:flex gap-4 mb-4'>
                                     <div className='sm:w-1/2'>
-
-                                        {/* <FormField
-                                    control={form.control}
-                                    name="dateofbirth"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Date of Birth<Required /></FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    type="date"
-                                                    placeholder="Date"
-                                                    disabled={loading}
-
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                /> */}
-
+                                        {/* Email Field */}
                                         <FormField
                                             control={form.control}
                                             name="mail"
@@ -162,16 +176,15 @@ export default function RegisterForm() {
                                                             type="mail"
                                                             placeholder="Email"
                                                             disabled={loading}
-
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
-
                                     </div>
                                     <div className='sm:w-1/2'>
+                                        {/* Mobile Number Field */}
                                         <FormField
                                             control={form.control}
                                             name="mobilenumber"
@@ -185,211 +198,157 @@ export default function RegisterForm() {
                                                             disabled={loading}
                                                             maxLength={10}
                                                             minLength={10}
-
                                                         />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
-
                                     </div>
                                 </div>
 
-
-                                <div className='sm:flex gap-4 mb-4'>
-
-                                    <div className='sm:w-1/2'>
-
-                                        <FormField
-                                            control={form.control}
-                                            name="city"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>City/Town<Required /></FormLabel>
-                                                    <Select
-                                                        disabled={loading}
-                                                        onValueChange={field.onChange}
-                                                        value={field.value}
-                                                        defaultValue={field.value}
-                                                    >
-                                                        <FormControl>
-                                                            <SelectTrigger>
-                                                                <SelectValue
-                                                                    defaultValue={field.value}
-                                                                    placeholder="Select"
-                                                                />
-                                                            </SelectTrigger>
-                                                        </FormControl>
-                                                        <SelectContent>
-
-                                                            <SelectItem value='hyderabad'>
-                                                                Hyderabad
-                                                            </SelectItem>
-
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-
-                                    <div className='sm:w-1/2'>
-                                        <FormField
-                                            control={form.control}
-                                            name="state"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>State<Required /></FormLabel>
-                                                    <Select
-                                                        disabled={loading}
-                                                        onValueChange={field.onChange}
-                                                        value={field.value}
-                                                        defaultValue={field.value}
-                                                    >
-                                                        <FormControl>
-                                                            <SelectTrigger>
-                                                                <SelectValue
-                                                                    defaultValue={field.value}
-                                                                    placeholder="Select"
-                                                                />
-                                                            </SelectTrigger>
-                                                        </FormControl>
-                                                        <SelectContent>
-
-                                                            <SelectItem value='telangana'>
-                                                                Telangana
-                                                            </SelectItem>
-
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className='border rounded-md p-3 mt-3'>
-                                    <FormField
-                                        control={form.control}
-                                        name="qualifications"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Qualifications<Required /></FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        type="text"
-                                                        placeholder="Qualifications"
-                                                        disabled={loading}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <div className='sm:flex gap-4 my-4'>
-                                        <div className='sm:w-1/2'>
-                                            <FormField
-                                                control={form.control}
-                                                name="college"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Medical College Name</FormLabel>
-                                                        <Select
-                                                            disabled={loading}
-                                                            onValueChange={field.onChange}
-                                                            value={field.value}
-                                                            defaultValue={field.value}
-                                                        >
-                                                            <FormControl>
-                                                                <SelectTrigger>
-                                                                    <SelectValue
-                                                                        defaultValue={field.value}
-                                                                        placeholder="Select"
-                                                                    />
-                                                                </SelectTrigger>
-                                                            </FormControl>
-                                                            <SelectContent>
-
-                                                                <SelectItem value='AIIMS'>
-                                                                    AIIMS
-                                                                </SelectItem>
-
-                                                            </SelectContent>
-                                                        </Select>
-                                                        <FormMessage />
-                                                    </FormItem>
+                                {/* Qualifications Accordion */}
+                                <Accordion type="single" collapsible defaultValue={`qualification-0`}>
+                                    {fields.map((field, index) => (
+                                        <AccordionItem value={`qualification-${index}`} key={field.id}>
+                                            <AccordionTrigger
+                                                className={cn(
+                                                    'relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden'
                                                 )}
-                                            />
-                                        </div>
-
-                                        <div className='sm:w-1/2'>
-
-
-                                            <FormField
-                                                control={form.control}
-                                                name="courseyear"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Course Year<Required /></FormLabel>
-                                                        <Select
-                                                            disabled={loading}
-                                                            onValueChange={field.onChange}
-                                                            value={field.value}
-                                                            defaultValue={field.value}
-                                                        >
-                                                            <FormControl>
-                                                                <SelectTrigger>
-                                                                    <SelectValue
-                                                                        defaultValue={field.value}
-                                                                        placeholder="Select"
+                                            >
+                                                {`Qualification ${index + 1}`}
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="absolute right-8"
+                                                    onClick={() => remove(index)}
+                                                >
+                                                    <Trash2Icon className="h-4 w-4" />
+                                                </Button>
+                                            </AccordionTrigger>
+                                            <AccordionContent>
+                                                <div className="relative mb-4 gap-8 rounded-md border p-4">
+                                                    <FormField
+                                                        control={control}
+                                                        name={`qualifications[${index}].qualification`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Qualifications</FormLabel>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        type="text"
+                                                                        placeholder="Qualifications"
+                                                                        {...field}
                                                                     />
-                                                                </SelectTrigger>
-                                                            </FormControl>
-                                                            <SelectContent>
-
-                                                                <SelectItem value='2024'>
-                                                                    2024
-                                                                </SelectItem>
-
-                                                            </SelectContent>
-                                                        </Select>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <FormField
-                                        control={form.control}
-                                        name="licenseregistrationID"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>License Registration ID<Required /></FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        type="text"
-                                                        placeholder="License Registration ID"
-                                                        disabled={loading}
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
                                                     />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
+                                                    {/* College and Course Year Fields */}
+                                                    <div className="sm:flex gap-4 my-4">
+                                                        <div className="sm:w-1/2">
+                                                            <FormField
+                                                               control={form.control}
+                                                                name={`qualifications[${index}].college`}
+                                                                render={({ field }) => (
+                                                                    <FormItem>
+                                                                        <FormLabel>Medical College Name</FormLabel>
+                                                                        <Select
+                                                                             onValueChange={field.onChange}
+                                                                             value={field.value}
+                                                                             defaultValue={field.value}
+                                                                        >
+                                                                            <FormControl>
+                                                                                <SelectTrigger>
+                                                                                    <SelectValue
+                                                                                        defaultValue={field.value}
+                                                                                        placeholder="Select"
+                                                                                    />
+                                                                                </SelectTrigger>
+                                                                            </FormControl>
+                                                                            <SelectContent>
+                                                                                <SelectItem value="AIIMS">AIIMS</SelectItem>
+                                                                                {/* Add more colleges as needed */}
+                                                                            </SelectContent>
+                                                                        </Select>
+                                                                        <FormMessage />
+                                                                    </FormItem>
+                                                                )}
+                                                            />
+                                                        </div>
+                                                        <div className="sm:w-1/2">
+                                                            <FormField
+                                                                control={form.control}
+                                                                name={`qualifications[${index}].courseyear`}
+                                                                render={({ field }) => (
+                                                                    <FormItem>
+                                                                        <FormLabel>Course Year</FormLabel>
+                                                                        <Select
+                                                                          onValueChange={field.onChange}
+                                                                          value={field.value}
+                                                                          defaultValue={field.value}
+                                                                        >
+                                                                            <FormControl>
+                                                                                <SelectTrigger>
+                                                                                    <SelectValue
+                                                                                        defaultValue={field.value}
+                                                                                        placeholder="Select"
+                                                                                    />
+                                                                                </SelectTrigger>
+                                                                            </FormControl>
+                                                                            <SelectContent>
+                                                                                <SelectItem key={"2024"} value="2024">2024</SelectItem>
+                                                                            </SelectContent>
+                                                                        </Select>
+                                                                        <FormMessage />
+                                                                    </FormItem>
+                                                                )}
+                                                            />
 
-                                {/* <div className='text-primary font-semibold cursor-pointer my-2 flex gap-1 justify-end'>
+
+
+                                                        </div>
+                                                    </div>
+                                                    <FormField
+                                                        control={control}
+                                                        name={`qualifications[${index}].licenseregistrationID`}
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>License Registration ID</FormLabel>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        type="text"
+                                                                        placeholder="License Registration ID"
+                                                                        {...field}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                </div>
+                                            </AccordionContent>
+                                        </AccordionItem>
+                                    ))}
+
+                                    {/* {fields.length === 0 && append({ qualification: "", college: "", courseyear: "", licenseregistrationID: "" })} */}
+
+                                </Accordion>
+
+                                {/* Add Button for Qualifications */}
+                                <div
+                                    className='text-primary font-semibold cursor-pointer my-2 flex gap-1 justify-end'
+                                    onClick={() => append({ qualification: "", college: "", courseyear: "", licenseregistrationID: "" })}
+                                >
                                     Add
                                     <Image src={plusIcon} alt='plusIcon' width={15} height={15} />
-                                </div> */}
+                                </div>
 
+                                {/* Terms and Conditions */}
                                 <div className='text-sm font-medium my-2'>
                                     <input type='checkbox' />
-                                    <label>  By signing up you agree to our{' '}
+                                    <label> By signing up you agree to our{' '}
                                         <span className='text-[#db710e] underline cursor-pointer'>Terms & Conditions</span>{' '}and{' '}
                                         <span className='text-[#db710e] underline cursor-pointer'>Privacy Policy </span>
                                     </label>
@@ -398,11 +357,10 @@ export default function RegisterForm() {
                         )}
                     />
                     <div>
-                        <Button className="w-full bg-primary mt-2 text-white" type='submit' >
+                        <Button className="w-full bg-primary mt-2 text-white" type='submit'>
                             Create Account
                         </Button>
                     </div>
-
                 </form>
             </Form>
 
