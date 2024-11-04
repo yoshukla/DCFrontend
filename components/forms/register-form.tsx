@@ -230,7 +230,7 @@ export default function RegisterForm() {
                                                 <div className="relative mb-4 gap-8 rounded-md border p-4">
                                                     <FormField
                                                         control={control}
-                                                        name={`qualifications[${index}].qualification`}
+                                                        name={`qualification`}
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>Qualifications</FormLabel>
@@ -250,7 +250,7 @@ export default function RegisterForm() {
                                                         <div className="sm:w-1/2">
                                                             <FormField
                                                                 control={form.control}
-                                                                name={`qualifications[${index}].college`}
+                                                                name={'college'}
                                                                 render={({ field }) => (
                                                                     <FormItem>
                                                                         <FormLabel>Medical College Name</FormLabel>
@@ -279,7 +279,7 @@ export default function RegisterForm() {
                                                         <div className="sm:w-1/2">
                                                             <FormField
                                                                 control={form.control}
-                                                                name={`qualifications[${index}].courseyear`}
+                                                                name={'courseyear'}
                                                                 render={({ field }) => (
                                                                     <FormItem>
                                                                         <FormLabel>Course Year</FormLabel>
