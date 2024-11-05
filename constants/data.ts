@@ -121,24 +121,24 @@ export const navItems: NavItem[] = [
     title: 'Consultation',
     href: '/dashboard/consultation',
     icon: 'user',
-    label: 'user'
+    label: 'consultation'
   },
   {
     title: 'List of Patients',
-    href: '/dashboard/listofpaients',
+    href: '/dashboard/listofpatients',
     icon: 'page',
-    label: 'employee'
+    label: 'listofpatients'
   },
   {
     title: 'Paymnet Receipts',
-    href: '/dashboard/profile',
+    href: '/dashboard/paymentreceipts',
     icon: 'billing',
-    label: 'profile'
+    label: 'paymentreceipts'
   },
-  {
-    title: 'Request to admin',
-    href: '/dashboard/kanban',
-    icon: 'kanban',
-    label: 'kanban'
-  } 
+  // {
+  //   title: 'Request to admin',
+  //   href: '/dashboard/kanban',
+  //   icon: 'kanban',
+  //   label: 'kanban'
+  // } 
 ];
