@@ -39,6 +39,7 @@ import Image from 'next/image';
 import plusIcon from '../../public/images/plusIcon.svg'
 import * as z from 'zod';
 import Required from '@/components/forms/required';
+import { Textarea } from '../ui/textarea';
 
 
 const formSchema = z.object({
@@ -112,6 +113,7 @@ export default function RegisterForm() {
             </div>
             <Form {...form}>
                 <form className="w-full">
+                   
                     <FormField
                         control={form.control}
                         name="email"
@@ -183,6 +185,33 @@ export default function RegisterForm() {
                                             )}
                                         />
                                     </div>
+
+                                    <div className='sm:w-1/2'>
+                                        {/* Email Field */}
+                                        <FormField
+                                            control={form.control}
+                                            name="mail"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Password<Required /></FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="password"
+                                                            placeholder="Password"
+                                                            disabled={loading}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+
+
+
+                                <div className='sm:flex gap-4 mb-4'>
+
                                     <div className='sm:w-1/2'>
                                         {/* Mobile Number Field */}
                                         <FormField
@@ -205,143 +234,241 @@ export default function RegisterForm() {
                                             )}
                                         />
                                     </div>
+
+                                    <div className='sm:w-1/2'>
+                                        {/* Mobile Number Field */}
+                                        <FormField
+                                            control={form.control}
+                                            name="email"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Abha ID<Required /></FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="text"
+                                                            placeholder="Abha ID"
+                                                            disabled={loading}
+                                                            maxLength={10}
+                                                            minLength={10}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+
+
+                                <div className="sm:flex gap-4 my-4">
+
+                                    <div className="sm:w-1/2">
+                                        <FormField
+                                            control={form.control}
+                                            name={'state'}
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>State<Required /></FormLabel>
+                                                    <Select
+                                                        onValueChange={field.onChange}
+                                                        value={field.value}
+                                                    >
+                                                        <FormControl>
+                                                            <SelectTrigger>
+                                                                <SelectValue
+                                                                    defaultValue={field.value}
+                                                                    placeholder="Select"
+                                                                />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            <SelectItem value="telangana">Telangana</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                    </div>
+
+                                    <div className="sm:w-1/2">
+                                        <FormField
+                                            control={form.control}
+                                            name={'college'}
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>City<Required /></FormLabel>
+                                                    <Select
+                                                        onValueChange={field.onChange}
+                                                        value={field.value}
+                                                    >
+                                                        <FormControl>
+                                                            <SelectTrigger>
+                                                                <SelectValue
+                                                                    defaultValue={field.value}
+                                                                    placeholder="Select"
+                                                                />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            <SelectItem value="hyderabad">Hyderabad</SelectItem>
+                                                            {/* Add more colleges as needed */}
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+
+                                </div>
+
+                                <div className='my-4'>
+
+                                    <FormField
+                                        control={form.control}
+                                        name="mail"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Address<Required /></FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        id="description"
+                                                        name="description"
+                                                        placeholder="Address..."
+                                                        className="col-span-4"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
                                 </div>
 
                                 {/* Qualifications Accordion */}
-                                <Accordion type="single" collapsible defaultValue={`qualification-0`}>
-                                    {fields.map((field, index) => (
-                                        <AccordionItem value={`qualification-${index}`} key={field.id}>
-                                            <AccordionTrigger
-                                                className={cn(
-                                                    'relative !no-underline [&[data-state=closed]>button]:hidden [&[data-state=open]>.alert]:hidden'
-                                                )}
-                                            >
-                                                {`Qualification ${index + 1}`}
-                                                <Button
-                                                    variant="outline"
-                                                    size="icon"
-                                                    className="absolute right-8"
-                                                    onClick={() => remove(index)}
-                                                >
-                                                    <Trash2Icon className="h-4 w-4" />
-                                                </Button>
-                                            </AccordionTrigger>
-                                            <AccordionContent>
-                                                <div className="relative mb-4 gap-8 rounded-md border p-4">
-                                                    <FormField
-                                                        control={control}
-                                                        name={`qualification`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>Qualifications</FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="text"
-                                                                        placeholder="Qualifications"
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                    {/* College and Course Year Fields */}
-                                                    <div className="sm:flex gap-4 my-4">
-                                                        <div className="sm:w-1/2">
-                                                            <FormField
-                                                                control={form.control}
-                                                                name={'college'}
-                                                                render={({ field }) => (
-                                                                    <FormItem>
-                                                                        <FormLabel>Medical College Name</FormLabel>
-                                                                        <Select
-                                                                            onValueChange={field.onChange}
-                                                                            value={field.value}
-                                                                        >
-                                                                            <FormControl>
-                                                                                <SelectTrigger>
-                                                                                    <SelectValue
-                                                                                        defaultValue={field.value}
-                                                                                        placeholder="Select"
-                                                                                    />
-                                                                                </SelectTrigger>
-                                                                            </FormControl>
-                                                                            <SelectContent>
-                                                                                <SelectItem value="AIIMS">AIIMS</SelectItem>
-                                                                                {/* Add more colleges as needed */}
-                                                                            </SelectContent>
-                                                                        </Select>
-                                                                        <FormMessage />
-                                                                    </FormItem>
-                                                                )}
-                                                            />
-                                                        </div>
-                                                        <div className="sm:w-1/2">
-                                                            <FormField
-                                                                control={form.control}
-                                                                name={'courseyear'}
-                                                                render={({ field }) => (
-                                                                    <FormItem>
-                                                                        <FormLabel>Course Year</FormLabel>
-                                                                        <Select
-                                                                            onValueChange={field.onChange}
-                                                                            value={field.value}
-                                                                        >
-                                                                            <FormControl>
-                                                                                <SelectTrigger>
-                                                                                    <SelectValue
-                                                                                        defaultValue={field.value}
-                                                                                        placeholder="Select"
-                                                                                    />
-                                                                                </SelectTrigger>
-                                                                            </FormControl>
-                                                                            <SelectContent>
-                                                                                <SelectItem key={"2024"} value="2024">2024</SelectItem>
-                                                                            </SelectContent>
-                                                                        </Select>
-                                                                        <FormMessage />
-                                                                    </FormItem>
-                                                                )}
-                                                            />
 
+                                <h1 className="text-md mb-2 underline font-semibold tracking-tight">
+                                    Education Details :
+                                </h1>
 
+                                {fields.map((field, index) => (
+                                    <div key={field.id}>
 
-                                                        </div>
+                                        <div>
+                                            <div className="relative mb-4 gap-8 rounded-md border p-4">
+                                                <FormField
+                                                    control={control}
+                                                    name={`qualification`}
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Qualifications</FormLabel>
+                                                            <FormControl>
+                                                                <Input
+                                                                    type="text"
+                                                                    placeholder="Qualifications"
+                                                                    {...field}
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                {/* College and Course Year Fields */}
+                                                <div className="sm:flex gap-4 my-4">
+                                                    <div className="sm:w-1/2">
+                                                        <FormField
+                                                            control={form.control}
+                                                            name={'college'}
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>Medical College Name</FormLabel>
+                                                                    <Select
+                                                                        onValueChange={field.onChange}
+                                                                        value={field.value}
+                                                                    >
+                                                                        <FormControl>
+                                                                            <SelectTrigger>
+                                                                                <SelectValue
+                                                                                    defaultValue={field.value}
+                                                                                    placeholder="Select"
+                                                                                />
+                                                                            </SelectTrigger>
+                                                                        </FormControl>
+                                                                        <SelectContent>
+                                                                            <SelectItem value="AIIMS">AIIMS</SelectItem>
+                                                                            {/* Add more colleges as needed */}
+                                                                        </SelectContent>
+                                                                    </Select>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
                                                     </div>
-                                                    <FormField
-                                                        control={control}
-                                                        name={`qualifications[${index}].licenseregistrationID`}
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>License Registration ID</FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        type="text"
-                                                                        placeholder="License Registration ID"
-                                                                        {...field}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
+                                                    <div className="sm:w-1/2">
+                                                        <FormField
+                                                            control={form.control}
+                                                            name={'courseyear'}
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>Course Year</FormLabel>
+                                                                    <Select
+                                                                        onValueChange={field.onChange}
+                                                                        value={field.value}
+                                                                    >
+                                                                        <FormControl>
+                                                                            <SelectTrigger>
+                                                                                <SelectValue
+                                                                                    defaultValue={field.value}
+                                                                                    placeholder="Select"
+                                                                                />
+                                                                            </SelectTrigger>
+                                                                        </FormControl>
+                                                                        <SelectContent>
+                                                                            <SelectItem key={"2024"} value="2024">2024</SelectItem>
+                                                                        </SelectContent>
+                                                                    </Select>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+
+
+
+                                                    </div>
                                                 </div>
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    ))}
+                                                <FormField
+                                                    control={control}
+                                                    name={`qualifications[${index}].licenseregistrationID`}
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>License Registration ID</FormLabel>
+                                                            <FormControl>
+                                                                <Input
+                                                                    type="text"
+                                                                    placeholder="License Registration ID"
+                                                                    {...field}
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
 
-                                    {/* {fields.length === 0 && append({ qualification: "", college: "", courseyear: "", licenseregistrationID: "" })} */}
-
-                                </Accordion>
 
                                 {/* Add Button for Qualifications */}
-                                <div
+                                {/*  <div
                                     className='text-primary font-semibold cursor-pointer my-2 flex gap-1 justify-end'
                                     onClick={() => append({ qualification: "", college: "", courseyear: "", licenseregistrationID: "" })}
                                 >
                                     Add
                                     <Image src={plusIcon} alt='plusIcon' width={15} height={15} />
-                                </div>
+                                </div> */}
 
                                 {/* Terms and Conditions */}
                                 <div className='text-sm font-medium my-2'>
