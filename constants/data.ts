@@ -142,3 +142,5 @@ export const navItems: NavItem[] = [
   //   label: 'kanban'
   // } 
 ];
+
+export const BASE_URL='https://dc-portal-4faf5a68d201.herokuapp.com/graphql';

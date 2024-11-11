@@ -336,62 +336,63 @@ export default function Page() {
               </TabsContent>
 
               <TabsContent value="bmi" className="space-y-4">
-                {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {diagnosisData.map((data) => (
-                  <Card key={data.id}>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
-                      <CardTitle className="text-sm font-medium">
-                        {data.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-primary font-semibold text-sm">
-                        {data.content}
-                      </p>
-                    </CardContent>
-                    <CardFooter>
-                      <div className="flex justify-between text-[13px] w-full">
-                        <p>{data.date}</p>
-                        <p>{data.doctor}</p>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </div> */}
-                <div className='flex'>
-                  <Image src={BmiImage} alt='bmiimage' className='w-20' />
-                  <div className='relative'>
+                <div className='flex sm:flex-row flex-col sm:gap-0 gap-4'>
+                  <div className='flex'>
+                    <Image src={BmiImage} alt='bmiimage' className='w-20' />
+                    <div className='relative'>
 
-                    <div className='border-2 absolute border-[#000000] h-16 ml-4'></div>
-                    <div className='border-2 absolute bottom-0 border-[#000000] h-16 ml-4'></div>
+                      <div className='border-2 absolute border-[#000000] h-16 ml-4'></div>
+                      <div className='border-2 absolute bottom-0 border-[#000000] h-16 ml-4'></div>
 
-                    <div className='border-t-0 w-[31px] border-l-0 border-r-0 -bottom-[2px] -left-[13px] border-2 absolute  border-[#000000] h-16 ml-4'></div>
+                      <div className='border-t-0 w-[31px] border-l-0 border-r-0 -bottom-[2px] -left-[13px] border-2 absolute  border-[#000000] h-16 ml-4'></div>
 
-                    <div className="absolute w-[96px] left-[27px] top-1/2 right-0 transform -translate-y-1/2">
-                    <Card className='rounded-md'>
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0  py-1 px-6">
-                        <CardTitle className="text-sm font-medium">
-                        <p className='text-[#0070C0] text-sm'>Height</p>
-                        <p>180 cm</p>
-                        </CardTitle>
-                      </CardHeader>
-                      {/* <CardContent>
+                      <div className="absolute w-[96px] left-[27px] top-1/2 right-0 transform -translate-y-1/2">
+                        <Card className='rounded-md'>
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0  py-1 px-6">
+                            <CardTitle className="text-sm font-medium">
+                              <p className='text-[#0070C0] text-sm'>Height</p>
+                              <p>180 cm</p>
+                            </CardTitle>
+                          </CardHeader>
+                          {/* <CardContent>
                         <p className="text-primary font-semibold text-sm">
                          snd c
                         </p>
                       </CardContent> */}
-                      {/* <CardFooter>
+                          {/* <CardFooter>
                         <div className="flex justify-between text-[13px] w-full">
                           <p>{data.date}</p>
                           <p>{data.doctor}</p>
                         </div>
                       </CardFooter> */}
-                    </Card>
+                        </Card>
+                      </div>
+
                     </div>
 
                   </div>
 
+                  <div className="sm:ml-40">
+                    <Card>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+                        <CardTitle className="text-sm font-medium">
+                        Weight
+                        <p className='text-[#0EBB13]'>87 kg</p>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="font-semibold text-sm">
+                        Last Measurement:<span className='text-[#0EBB13]'> 82 kg</span>
+                        </p>
+                        <p className='font-semibold text-sm mt-3'>30 Jan 2024</p>
+                      </CardContent>
+                      
+                    </Card>
+
+                  </div>
+
                 </div>
+
               </TabsContent>
 
               <TabsContent value="procedures" className="space-y-4">
