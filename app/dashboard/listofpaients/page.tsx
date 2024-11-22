@@ -35,6 +35,8 @@ export default async function page({ searchParams }: paramsProps) {
   const totalUsers = employeeRes.total_users; //1000
   const pageCount = Math.ceil(totalUsers / pageLimit);
   const employee: Employee[] = employeeRes.users;
+
+ 
   return (
     <PageContainer>
       <div className="space-y-4">
